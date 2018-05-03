@@ -19,10 +19,7 @@ namespace priceDrops
         private int DISC_1 = -1;
         private int DISC_2 = -1;
         private int DISC_3 = -1;
-        private List<string> CUSTOM_NPCS = new List<string>();
-        // Krobus will incrementally apply discounts for some arcane reason, so discounts should only be applied once a day
-        private Boolean krobusToday = false;
-        private int krobusHearts = -1;
+        private List<string> CUSTOM_NPCS = new List<string>();        
 
         /*********
         ** Public methods
@@ -70,18 +67,7 @@ namespace priceDrops
             // When menus change (ie. a shop window is opened), go do the magic
             MenuEvents.MenuChanged += this.MenuEvents_MenuChanged;
 
-            // Krobus is bugged, so he needs special care
-            TimeEvents.AfterDayStarted += this.TimeEvents_AfterDayStarted;
-        }       
-
-        // Reset detector for if Krobus was talked to today and get his current heart level
-        public void TimeEvents_AfterDayStarted(object sender, EventArgs e)
-        {
-            //this.Monitor.Log($"Resetting Krobus settings for the day.");
-            krobusToday = false;
-            krobusHearts = Game1.player.getFriendshipHeartLevelForNPC("Krobus");
-            //this.Monitor.Log($"Player has " + krobusHearts + " hearts with Krobus.");
-        }
+        }               
 
         // When menus change (ie. a shop window is opened), go do the magic
         public void MenuEvents_MenuChanged(object sender, EventArgs e)
@@ -92,11 +78,10 @@ namespace priceDrops
             // Marnie's animal shop menu
             if (Game1.activeClickableMenu is PurchaseAnimalsMenu animalsMenu)
             {
-
-
-
                 // --> //Game1.NPCGiftTastes <--
-               // Game1.NPCGiftTastes;
+                // Game1.NPCGiftTastes;
+                // -> mod für sinnvollen geschmack
+                // -> feature das alle geschenke randomized
 
 
                 //this.Monitor.Log($"Animals are up.");
@@ -144,8 +129,7 @@ namespace priceDrops
             applyShopDiscounts("Sandy");
             applyShopDiscounts("Willy");            
             applyShopDiscounts("Dwarf");
-            applyShopDiscounts("Krobus");
-            
+            applyShopDiscounts("Krobus");            
 
             // Custom NPCs
             foreach (string name in CUSTOM_NPCS)
@@ -194,57 +178,121 @@ namespace priceDrops
 
                             //this.Monitor.Log($"Player has " + hearts + " hearts with Robin and receives " + percentage + "% off.");
 
-                            // Update price and resource cost
-                            fields[17] = getPercentage(buildingPrice, percentage).ToString();
+                            // Blueprints also contains prices for Wizard buildings, so we need him too
+                            int hearts_wiz = Game1.player.getFriendshipHeartLevelForNPC("Wizard");
+
+                            int percentage_wiz = 0;
+
+                            if (hearts_wiz >= HEART_LEVEL_3)
+                                percentage_wiz = DISC_3;
+                            else if (hearts_wiz >= HEART_LEVEL_2)
+                                percentage_wiz = DISC_2;
+                            else if (hearts_wiz >= HEART_LEVEL_1)
+                                percentage_wiz = DISC_1;
+
+                            //this.Monitor.Log($"Player has " + hearts_wiz + " hearts with the Wizard and receives " + percentage_wiz + "% off.");
 
                             // Beware evil hardcoding of doom
                             if (fields[8].Equals("Silo"))
                             {
+                                // Update price and resource cost
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "390 " + getPercentage(100, percentage).ToString() + " 330 " + getPercentage(10, percentage).ToString() + " 334 " + getPercentage(5, percentage).ToString();
                             }
                             else if (fields[8].Equals("Mill"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(150, percentage).ToString() + " 390 " + getPercentage(50, percentage).ToString() + " 428 " + getPercentage(4, percentage).ToString();
                             }
                             else if (fields[8].Equals("Stable"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "709 " + getPercentage(100, percentage).ToString() + " 335 " + getPercentage(5, percentage).ToString();
                             }
                             else if (fields[8].Equals("Well"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "390 " + getPercentage(75, percentage).ToString();
                             }
                             else if (fields[8].Equals("Coop"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(300, percentage).ToString() + " 390 " + getPercentage(100, percentage).ToString();
                             }
                             else if (fields[8].Equals("Big Coop"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(400, percentage).ToString() + " 390 " + getPercentage(150, percentage).ToString();
                             }
                             else if (fields[8].Equals("Deluxe Coop"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(500, percentage).ToString() + " 390 " + getPercentage(200, percentage).ToString();
                             }
                             else if (fields[8].Equals("Barn"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(350, percentage).ToString() + " 390 " + getPercentage(150, percentage).ToString();
                             }
                             else if (fields[8].Equals("Big Barn"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(450, percentage).ToString() + " 390 " + getPercentage(200, percentage).ToString();
                             }
                             else if (fields[8].Equals("Deluxe Barn"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(550, percentage).ToString() + " 390 " + getPercentage(300, percentage).ToString();
                             }
                             else if (fields[8].Equals("Slime Hutch"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "390 " + getPercentage(500, percentage).ToString() + " 338 " + getPercentage(10, percentage).ToString() + " 337 1";
                             }
                             else if (fields[8].Equals("Shed"))
                             {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
                                 fields[0] = "388 " + getPercentage(300, percentage).ToString();
+                            }
+                            else if(fields[8].Equals("Stone Cabin"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
+                                fields[0] = "390 " + getPercentage(10, percentage).ToString();
+                            }
+                            else if(fields[8].Equals("Plank Cabin"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
+                                fields[0] = "388 " + getPercentage(5, percentage).ToString() + " 771 "+getPercentage(10, percentage).ToString();
+                            }
+                            else if(fields[8].Equals("Log Cabin"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
+                                fields[0] = "388 " + getPercentage(10, percentage).ToString();
+                            }
+                            else if(fields[8].Equals("Shipping Bin"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage).ToString();
+                                fields[0] = "388 " + getPercentage(150, percentage).ToString();
+                            }
+                            // Wizard buildings
+                            else if(fields[8].Equals("Earth Obelisk"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage_wiz).ToString();
+                                fields[0] = "337 " + getPercentage(10, percentage_wiz).ToString() + " 86 "+getPercentage(10, percentage_wiz).ToString();
+                            }
+                            else if (fields[8].Equals("Water Obelisk"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage_wiz).ToString();
+                                fields[0] = "337 " + getPercentage(5, percentage_wiz).ToString() + " 372 " + getPercentage(10, percentage_wiz).ToString() + " 393 " + getPercentage(10, percentage_wiz).ToString();
+                            }
+                            else if (fields[8].Equals("Junimo Hut"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage_wiz).ToString();
+                                fields[0] = "390 " + getPercentage(200, percentage_wiz).ToString() + " 268 " + getPercentage(9, percentage_wiz).ToString() + " 771 "+getPercentage(100, percentage_wiz).ToString();
+                            }
+                            else if (fields[8].Equals("Gold Clock"))
+                            {
+                                fields[17] = getPercentage(buildingPrice, percentage_wiz).ToString();                                
                             }
                         }
                     }
@@ -284,71 +332,14 @@ namespace priceDrops
                 // Prices are in the itemPriceAndStock dictionary. The first number of the int[] is the price. Second is stock probably?
                 Dictionary<Item, int[]> priceAndStock = this.Helper.Reflection.GetField<Dictionary<Item, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
 
-                // If friendship with Krobus changed, recalculate base values of his items and re-apply new discounts
-                if (characterName.Equals("Krobus"))
+                //this.Monitor.Log($"Player has " + hearts + " hearts with " + characterName+" and receives "+percentage+"% off.");
+
+                // Change supply shop prices here
+                foreach (KeyValuePair<Item, int[]> kvp in priceAndStock)
                 {
-                    //this.Monitor.Log($"Yep, it's Krobus.");
-
-                    if(krobusHearts != hearts)
-                    {
-                        //this.Monitor.Log($"Krobus' hearts changed during the day! Hearts at day start: " + krobusHearts + " .. hearts now: " + hearts);
-
-                        // Get the old discount
-                        double perc = 0;
-
-                        if (krobusHearts >= HEART_LEVEL_3)
-                            perc = DISC_3;
-                        else if (krobusHearts >= HEART_LEVEL_2)
-                            perc = DISC_2;
-                        else if (krobusHearts >= HEART_LEVEL_1)
-                            perc = DISC_1;
-
-                        //this.Monitor.Log($"Percentage off: " + perc);
-
-                        // Calculate up the original price                        
-
-                        // To get original price from discounted price:
-                        // (( 100 - discount ) / 100) * pOriginal = pDiscounted
-                        // => pOriginal = pDiscounted * (100 / (100 - d))
-
-                        //this.Monitor.Log($"Recalculating original prices... multiplying by "+perc);
-
-                        // Multiply reduced prices with what we calculated above to go back to original prices
-                        foreach(KeyValuePair<Item, int[]> kvp in priceAndStock)
-                        {
-                            int discountedPrice = int.Parse(kvp.Value.GetValue(0).ToString());
-                            int originalPrice = 0;
-
-                            if (perc == 100)
-                                //this.Monitor.Log($"100% off? Really? You deserve this crash :3");
-
-                            originalPrice = (int)((double)discountedPrice * (100 / (100 - perc)));
-
-                            kvp.Value.SetValue(originalPrice, 0);
-                        }
-
-                        //this.Monitor.Log($"Reset prices.");
-
-                        krobusToday = false;
-                        krobusHearts = hearts;
-                    }
-                }                
-
-                // If player has not talked to Krobus today yet, apply discounts
-                if(characterName.Equals("Krobus") && !krobusToday || !characterName.Equals("Krobus"))
-                { 
-                    //this.Monitor.Log($"Player has " + hearts + " hearts with " + characterName+" and receives "+percentage+"% off.");
-
-                    // Change supply shop prices here
-                    foreach (KeyValuePair<Item, int[]> kvp in priceAndStock)
-                    {
-                        //this.Monitor.Log($"Old price: " + kvp.Value.GetValue(0));
-                        kvp.Value.SetValue(getPercentage(double.Parse(kvp.Value.GetValue(0).ToString()), percentage), 0);
-                        //this.Monitor.Log($"New price: " + kvp.Value.GetValue(0));
-                    }
-
-                    if (characterName.Equals("Krobus"))
-                        krobusToday = true;
+                    //this.Monitor.Log($"Old price: " + kvp.Value.GetValue(0));
+                    kvp.Value.SetValue(getPercentage(double.Parse(kvp.Value.GetValue(0).ToString()), percentage), 0);
+                    //this.Monitor.Log($"New price: " + kvp.Value.GetValue(0));
                 }
             }
         }
