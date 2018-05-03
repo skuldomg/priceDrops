@@ -1,4 +1,4 @@
-Created with SMAPI 2.5.5 and Stardew Valley 1.2.33 on Windows 10
+Created with SMAPI 2.6-beta.3 and Stardew Valley 1.3.5 on Windows 10
 
 #### WHAT THIS DOES
 
