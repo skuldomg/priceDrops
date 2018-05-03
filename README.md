@@ -1,4 +1,4 @@
-Created with SMAPI 2.6-beta.3 and Stardew Valley 1.3.5 on Windows 10
+Created with SMAPI 2.6-beta.3 and Stardew Valley 1.3.6 on Windows 10
 
 #### WHAT THIS DOES
 
@@ -17,6 +17,7 @@ Details on whose shops are currently affected:
 * Willy
 * Krobus
 * Dwarf
+* Wizard
 
 #### COMPATIBILITY
 
@@ -39,5 +40,4 @@ Important: The shop owner will of course have to be an NPC with which you can ea
 #### TO DO
 * Add custom dialogue so the player is informed in-game once he triggers discount levels
 * Add discount for house upgrades at Robin's
-* Add discount for wizard buildings
 * Possibly add various other rewards for better relationships with NPCs, ie. make Clint upgrade your tools faster etc.
