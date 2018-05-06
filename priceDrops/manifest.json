@@ -1,10 +1,16 @@
 ﻿{
    "Name": "priceDrops",
    "Author": "skuldomg",
-   "Version": "1.0.3",
+   "Version": "1.0.3-beta.2",
    "Description": "Introduces discounts at shops when the player has a good relationship with the shop owner.",
    "UniqueID": "skuldomg.priceDrops",
    "EntryDll": "priceDrops.dll",
-   "MinimumApiVersion": "2.0",
-   "UpdateKeys": ["Nexus:2047"]
+   "MinimumApiVersion": "2.6-beta",
+   "UpdateKeys": ["Nexus:2047"],
+   "Dependencies" : [
+   {
+		"UniqueID" : "DIGUS.MailFrameworkMod",
+		"MinimumVersion" : "1.2.1-beta.1"
+   }
+   ]
 }

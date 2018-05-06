@@ -21,6 +21,7 @@ namespace priceDrops
         public int disc1 { get; set; } = 10;
         public int disc2 { get; set; } = 25;
         public int disc3 { get; set; } = 50;
+        public int bonusDisc { get; set; } = 5;
 
         public List<string> customNPCs { get; set; } = new List<string> { "placeHolder1", "placeHolder2" };
     }
