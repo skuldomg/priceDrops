@@ -1,5 +1,9 @@
 Created with SMAPI 2.6-beta.3 and Stardew Valley 1.3.6 on Windows 10
 
+#### NEWS
+
+* Updated for SV multiplayer beta! Not tested in actual multiplayer yet but it is now safe to use in singleplayer again.
+
 #### WHAT THIS DOES
 
 Adds discounts to all shops if you have a good relationship with the owner. Discounts come in three levels, 10% at three hearts, 25% at seven hearts and 50% at ten hearts. Should work for all regular shops, including Robin's buildings (except for the house upgrade, planned for a later release). Robin will also offer resource discounts for buildings.
