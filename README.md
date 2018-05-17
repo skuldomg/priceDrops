@@ -1,8 +1,7 @@
-Created with SMAPI 2.6-beta.3 and Stardew Valley 1.3.6 on Windows 10
-
 #### NEWS
 
-* Updated for SV multiplayer beta! Not tested in actual multiplayer yet but it is now safe to use in singleplayer again.
+* Updated for SV multiplayer beta! There are some bugs related to letters being sent repeatably but discounts should work properly.
+* Players will no longer receive letters if a discount is 0% or less (price increase) because of custom config.
 
 #### WHAT THIS DOES
 
