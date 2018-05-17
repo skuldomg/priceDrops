@@ -118,7 +118,7 @@ namespace priceDrops
             pierreCarolineLetter = new Letter("pierreCaroline", "Hey, @, I didn't know you were best friends with my wife. She told me to give you a "+BONUS_DISC+ "% discount in our shop yesterday. You better stop by and shop often from now on!^^See you soon,^   -Pierre", (letter) => Game1.player.getFriendshipHeartLevelForNPC("Caroline") == 10);
             myLetters.Add(pierreCarolineLetter);
 
-            harvey1Letter = new Letter("harvey1", "Hello, @!^You've been a valued customer at my clinic. So I've decided to give you a "+DISC_1+ "% discount for my OTC medicine. Have a nice day!^   -Harvey^^PS: Don't forget to cover your mouth when you sneeze! Wash your hands often!", (letter) => Game1.player.getFriendshipHeartLevelForNPC("Harbey") >= HEART_LEVEL_1);
+            harvey1Letter = new Letter("harvey1", "Hello, @!^You've been a valued customer at my clinic. So I've decided to give you a "+DISC_1+ "% discount for my OTC medicine. Have a nice day!^   -Harvey^^PS: Don't forget to cover your mouth when you sneeze! Wash your hands often!", (letter) => Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_1);
             myLetters.Add(harvey1Letter);
             harvey2Letter = new Letter("harvey2", "Hello, @!^I'm so glad to have a friend in town. If you need tonics or remedies, just come by the clinic. I'll give you a "+DISC_2+ "% discount. See you soon!^   -Harvey^^PS: Don't forget to cover your mouth when you sneeze! Wash your hands often! If you need anything, just visit the clinic.", (letter) => Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_2);
             myLetters.Add(harvey2Letter);
@@ -223,8 +223,7 @@ namespace priceDrops
             MenuEvents.MenuChanged += this.MenuEvents_MenuChanged;
             TimeEvents.AfterDayStarted += this.TimeEvents_AfterDayStarted;
             SaveEvents.BeforeSave += this.SaveEvents_BeforeSave;
-
-        }
+        }        
 
         public void SaveEvents_BeforeSave(object sender, EventArgs e)
         {
@@ -240,216 +239,216 @@ namespace priceDrops
         public void TimeEvents_AfterDayStarted(object sender, EventArgs e)
         {
             // Check if any mail has to be sent
-            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_1 && !model.robinMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_1 && !model.robinMail1 && DISC_1 > 0)
             {
                 // First mail from Robin
                 MailDao.SaveLetter(robin1Letter);
                 model.robinMail1 = true; 
                 //Monitor.Log("First Robin letter received ... " + robinMail1);                
             }            
-            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_2 && !model.robinMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_2 && !model.robinMail2 && DISC_2 > 0)
             {
                 // Second mail from Robin
                 MailDao.SaveLetter(robin2Letter);
                 model.robinMail2 = true; 
                 //Monitor.Log("Second Robin letter received ... " + robinMail2);
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_3 && !model.robinMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Robin") >= HEART_LEVEL_3 && !model.robinMail3 && DISC_3 > 0)
             {
                 // Third mail from Robin
                 MailDao.SaveLetter(robin3Letter);
                 model.robinMail3 = true; 
                // Monitor.Log("Third Robin letter received ... " + robinMail3);
             }
-            if(Game1.getCharacterFromName("Maru", true).isMarried() && !model.robinMailMaru)
+            if(Game1.getCharacterFromName("Maru", true).isMarried() && !model.robinMailMaru && BONUS_DISC > 0)
             {
                 MailDao.SaveLetter(robinMaruLetter);
                 model.robinMailMaru = true;
             }
-            if(Game1.getCharacterFromName("Sebastian", true).isMarried() && !model.robinMailSebastian)            
+            if(Game1.getCharacterFromName("Sebastian", true).isMarried() && !model.robinMailSebastian && BONUS_DISC > 0)            
             {
                 MailDao.SaveLetter(robinSebastianLetter);
                 model.robinMailSebastian = true;
             }
 
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_1 && !model.marnieMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_1 && !model.marnieMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(marnie1Letter);
                 model.marnieMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_2 && !model.marnieMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_2 && !model.marnieMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(marnie2Letter);
                 model.marnieMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_3 && !model.marnieMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Marnie") >= HEART_LEVEL_3 && !model.marnieMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(marnie3Letter);
                 model.marnieMail3 = true;
             }
             // If the player has seen the blue chicken event
-            if(Game1.player.eventsSeen.Contains(3900074) && !model.marnieMailShane)
+            if(Game1.player.eventsSeen.Contains(3900074) && !model.marnieMailShane && BONUS_DISC > 0)
             {
                 //this.Monitor.Log("Player has seen the blue chickens.");
                 MailDao.SaveLetter(marnieShaneLetter);
                 model.marnieMailShane = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_1 && !model.pierreMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_1 && !model.pierreMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(pierre1Letter);
                 model.pierreMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_2 && !model.pierreMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_2 && !model.pierreMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(pierre2Letter);
                 model.pierreMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_3 && !model.pierreMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Pierre") >= HEART_LEVEL_3 && !model.pierreMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(pierre3Letter);
                 model.pierreMail3 = true;
             }
-            if (Game1.getCharacterFromName("Abigail", true).isMarried() && !model.pierreMailAbigail)
+            if (Game1.getCharacterFromName("Abigail", true).isMarried() && !model.pierreMailAbigail && BONUS_DISC > 0)
             {
                 MailDao.SaveLetter(pierreAbigailLetter);
                 model.pierreMailAbigail = true;
             }
-            if(Game1.player.getFriendshipHeartLevelForNPC("Caroline") == 10 && !model.pierreMailCaroline)
+            if(Game1.player.getFriendshipHeartLevelForNPC("Caroline") == 10 && !model.pierreMailCaroline && BONUS_DISC > 0)
             {
                 MailDao.SaveLetter(pierreCarolineLetter);
                 model.pierreMailCaroline = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_1 && !model.harveyMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_1 && !model.harveyMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(harvey1Letter);
                 model.harveyMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_2 && !model.harveyMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_2 && !model.harveyMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(harvey2Letter);
                 model.harveyMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_3 && !model.harveyMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Harvey") >= HEART_LEVEL_3 && !model.harveyMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(harvey3Letter);
                 model.harveyMail3 = true;
             }
-            if(Game1.getCharacterFromName("Harvey", true).isMarried() && !model.harveyMailMarried)
+            if(Game1.getCharacterFromName("Harvey", true).isMarried() && !model.harveyMailMarried && BONUS_DISC > 0)
             {
                 MailDao.SaveLetter(harveyMarriedLetter);
                 model.harveyMailMarried = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_1 && !model.gusMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_1 && !model.gusMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(gus1Letter);
                 model.gusMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_2 && !model.gusMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_2 && !model.gusMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(gus2Letter);
                 model.gusMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_3 && !model.gusMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Gus") >= HEART_LEVEL_3 && !model.gusMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(gus3Letter);
                 model.gusMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_1 && !model.clintMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_1 && !model.clintMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(clint1Letter);
                 model.clintMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_2 && Game1.player.eventsSeen.Contains(97) && !model.clintMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_2 && Game1.player.eventsSeen.Contains(97) && !model.clintMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(clint2Letter);
                 model.clintMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_3 && !model.clintMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Clint") >= HEART_LEVEL_3 && !model.clintMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(clint3Letter);
                 model.clintMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_1 && !model.sandyMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_1 && !model.sandyMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(sandy1Letter);
                 model.sandyMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_2 && !model.sandyMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_2 && !model.sandyMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(sandy2Letter);
                 model.sandyMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_3 && !model.sandyMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Sandy") >= HEART_LEVEL_3 && !model.sandyMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(sandy3Letter);
                 model.sandyMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_1 && !model.willyMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_1 && !model.willyMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(willy1Letter);
                 model.willyMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_2 && !model.willyMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_2 && !model.willyMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(willy2Letter);
                 model.willyMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_3 && !model.willyMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Willy") >= HEART_LEVEL_3 && !model.willyMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(willy3Letter);
                 model.willyMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_1 && !model.dwarfMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_1 && !model.dwarfMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(dwarf1Letter);
                 model.dwarfMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_2 && !model.dwarfMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_2 && !model.dwarfMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(dwarf2Letter);
                 model.dwarfMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_3 && !model.dwarfMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Dwarf") >= HEART_LEVEL_3 && !model.dwarfMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(dwarf3Letter);
                 model.dwarfMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_1 && !model.krobusMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_1 && !model.krobusMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(krobus1Letter);
                 model.krobusMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_2 && !model.krobusMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_2 && !model.krobusMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(krobus2Letter);
                 model.krobusMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_3 && !model.krobusMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Krobus") >= HEART_LEVEL_3 && !model.krobusMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(krobus3Letter);
                 model.krobusMail3 = true;
             }
 
-            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_1 && !model.wizardMail1)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_1 && !model.wizardMail1 && DISC_1 > 0)
             {
                 MailDao.SaveLetter(wizard1Letter);
                 model.wizardMail1 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_2 && !model.wizardMail2)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_2 && !model.wizardMail2 && DISC_2 > 0)
             {
                 MailDao.SaveLetter(wizard2Letter);
                 model.wizardMail2 = true;
             }
-            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_3 && !model.wizardMail3)
+            if (Game1.player.getFriendshipHeartLevelForNPC("Wizard") >= HEART_LEVEL_3 && !model.wizardMail3 && DISC_3 > 0)
             {
                 MailDao.SaveLetter(wizard3Letter);
                 model.wizardMail3 = true;
