@@ -176,7 +176,7 @@ namespace priceDrops
         
         private void applyShopDiscounts(string characterName)
         {
-            if (Game1.activeClickableMenu is ShopMenu shopMenu && shopMenu.portraitPerson == Game1.getCharacterFromName(characterName, true))
+            if (Game1.activeClickableMenu is ShopMenu shopMenu /*&& shopMenu.portraitPerson == Game1.getCharacterFromName(characterName, true)*/)
             {         
                 // Get player's relationship with character and set discount accordingly
                 int hearts = Game1.player.getFriendshipHeartLevelForNPC(characterName);
@@ -207,24 +207,42 @@ namespace priceDrops
                     if (Game1.player.getFriendshipHeartLevelForNPC("Caroline") == 10)
                         percentage += BONUS_DISC;
                 }
-                if(characterName.Equals("Harvey"))
+
+                // Prices are in the itemPriceAndStock dictionary. The first number of the int[] is the price. Second is stock probably?
+                Dictionary<Item, int[]> priceAndStock = this.Helper.Reflection.GetField<Dictionary<Item, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
+                bool isHarvey = false;
+
+                if (characterName.Equals("Harvey"))
                 {
                     // If player is married to Harvey, give an additional 5%
                     if (Game1.getCharacterFromName("Harvey", true).isMarried())
                         percentage += BONUS_DISC;
+
+                    // Determine if shop is Harvey's clinic
+                    foreach (KeyValuePair<Item, int[]> kvp in priceAndStock)
+                    {
+                        //this.Monitor.Log("Are we in Harvey's shop?");
+
+                        if (kvp.Key.Name.Equals("Muscle Remedy")) { 
+                            isHarvey = true;
+                            //this.Monitor.Log("Yup");
+                        }
+                    }
                 }
 
-                // Prices are in the itemPriceAndStock dictionary. The first number of the int[] is the price. Second is stock probably?
-                Dictionary<Item, int[]> priceAndStock = this.Helper.Reflection.GetField<Dictionary<Item, int[]>>(shopMenu, "itemPriceAndStock").GetValue();
 
-                //this.Monitor.Log($"Player has " + hearts + " hearts with " + characterName+" and receives "+percentage+"% off.");
+                if (shopMenu.portraitPerson == Game1.getCharacterFromName(characterName, true) || (characterName.Equals("Harvey") && isHarvey)) { 
 
-                // Change supply shop prices here
-                foreach (KeyValuePair<Item, int[]> kvp in priceAndStock)
-                {
-                    //this.Monitor.Log($"Old price: " + kvp.Value.GetValue(0));
-                    kvp.Value.SetValue(getPercentage(double.Parse(kvp.Value.GetValue(0).ToString()), percentage), 0);
-                    //this.Monitor.Log($"New price: " + kvp.Value.GetValue(0));
+                    //this.Monitor.Log($"Player has " + hearts + " hearts with " + characterName+" and receives "+percentage+"% off.");
+
+                    // Change supply shop prices here
+                    foreach (KeyValuePair<Item, int[]> kvp in priceAndStock)
+                    {
+                        //this.Monitor.Log($"Old price: " + kvp.Value.GetValue(0));
+                        kvp.Value.SetValue(getPercentage(double.Parse(kvp.Value.GetValue(0).ToString()), percentage), 0);
+                        //this.Monitor.Log($"New price: " + kvp.Value.GetValue(0));                        
+                    }
+
                 }
             }
         }
