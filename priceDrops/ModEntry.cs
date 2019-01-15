@@ -70,11 +70,10 @@ namespace priceDrops
             helper.Content.AssetEditors.Add(new mailEditor());
             
             // When menus change (ie. a shop window is opened), go do the magic
-            MenuEvents.MenuChanged += this.MenuEvents_MenuChanged;
+            Helper.Events.Display.MenuChanged += this.MenuEvents_MenuChanged;
 
-            // TODO: Find better time to do this
-           // TimeEvents.TimeOfDayChanged += this.TimeEvents_AfterDayStarted;            
-            SaveEvents.BeforeSave += this.SaveEvents_BeforeSave;
+           // TODO: Find better time to do this           
+           Helper.Events.GameLoop.Saving += this.SaveEvents_BeforeSave;
         }        
 
         public void SaveEvents_BeforeSave(object sender, EventArgs e)
@@ -84,7 +83,7 @@ namespace priceDrops
             this.Postman();
 
             // Save mail status
-            this.Helper.WriteJsonFile($"data/{Constants.SaveFolderName}.json", model);
+            Helper.Data.WriteJsonFile($"data/{Constants.SaveFolderName}.json", model);
         }        
 
         public void TimeEvents_AfterDayStarted(object sender, EventArgs e)
