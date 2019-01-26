@@ -1,6 +1,0 @@
-C:\Users\PC\source\repos\priceDrops\priceDrops\bin\Debug\priceDrops.dll
-C:\Users\PC\source\repos\priceDrops\priceDrops\bin\Debug\priceDrops.pdb
-C:\Users\PC\source\repos\priceDrops\priceDrops\obj\Debug\priceDrops.csproj.CoreCompileInputs.cache
-C:\Users\PC\source\repos\priceDrops\priceDrops\obj\Debug\priceDrops.dll
-C:\Users\PC\source\repos\priceDrops\priceDrops\obj\Debug\priceDrops.pdb
-C:\Users\PC\source\repos\priceDrops\priceDrops\obj\Debug\priceDrops.csprojResolveAssemblyReference.cache
