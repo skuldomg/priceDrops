@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LetterStatus.cs" />
     <Compile Include="mailEditor.cs" />
     <Compile Include="ModConfig.cs" />
     <Compile Include="ModEntry.cs" />
