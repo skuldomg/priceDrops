@@ -65,34 +65,42 @@ namespace priceDrops
             helper.Content.AssetEditors.Add(new mailEditor(helper.Translation));
             
             // When menus change (ie. a shop window is opened), go do the magic
-            Helper.Events.Display.MenuChanged += this.MenuEvents_MenuChanged;
+            helper.Events.Display.MenuChanged += this.OnMenuChanged;
 
-           // TODO: Find better time to do this           
-           Helper.Events.GameLoop.Saving += this.SaveEvents_BeforeSave;
-        }        
+            // TODO: Find better time to do this           
+            helper.Events.GameLoop.Saving += this.OnSaving;
+        }
 
-        public void SaveEvents_BeforeSave(object sender, EventArgs e)
+        /// <summary>Raised before the game begins writes data to the save file (except the initial save creation).</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        public void OnSaving(object sender, SavingEventArgs e)
         {
             // Check for new mail before sleeping
             // If we only checked for new mail before sleeping, players who install this mod mid-game would have a one day delay in receiving already existing discounts
             this.Postman();
         }
 
-        public void TimeEvents_AfterDayStarted(object sender, EventArgs e)
+        /// <summary>Raised after the game begins a new day (including when the player loads a save).</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        public void OnDayStarted(object sender, DayStartedEventArgs e)
         {
             // Check for new mail after new day has started
             // If we only checked for new mail after the day has started, players would have a one day delay in receiving mail when NPC disposition changes, so we do both           
             Postman();
         }
-        
-        // When menus change (ie. a shop window is opened), go do the magic
-        public void MenuEvents_MenuChanged(object sender, EventArgs e)
+
+        /// <summary>Raised after a game menu is opened, closed, or replaced.</summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event data.</param>
+        public void OnMenuChanged(object sender, MenuChangedEventArgs e)
         {
             // Force a reload of Robin's prices
             Helper.Content.InvalidateCache("Data\\Blueprints.xnb");
 
             // Marnie's animal shop menu
-            if (Game1.activeClickableMenu is PurchaseAnimalsMenu animalsMenu)
+            if (e.NewMenu is PurchaseAnimalsMenu animalsMenu)
             {               
                 //this.Monitor.Log($"Animals are up.");
 
