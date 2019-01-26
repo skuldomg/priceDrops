@@ -68,6 +68,7 @@ namespace priceDrops
             helper.Events.Display.MenuChanged += this.OnMenuChanged;
 
             // TODO: Find better time to do this           
+            helper.Events.GameLoop.DayStarted += this.OnDayStarted;
             helper.Events.GameLoop.Saving += this.OnSaving;
         }
 
