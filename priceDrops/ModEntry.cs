@@ -67,7 +67,7 @@ namespace priceDrops
 
             // Asset editors for Robin's prices and mail
             helper.Content.AssetEditors.Add(new robinEditor());
-            helper.Content.AssetEditors.Add(new mailEditor());
+            helper.Content.AssetEditors.Add(new mailEditor(helper.Translation));
             
             // When menus change (ie. a shop window is opened), go do the magic
             Helper.Events.Display.MenuChanged += this.MenuEvents_MenuChanged;
